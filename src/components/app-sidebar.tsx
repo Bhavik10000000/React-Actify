@@ -30,7 +30,7 @@ import {
   CommandIcon,
 } from "lucide-react";
 import { useContext } from "react";
-import MyContext from "@/context/MyContext";
+import { MyContext } from "@/context/MyContext";
 
 // interface Value {
 //   name: string;
