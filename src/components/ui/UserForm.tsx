@@ -13,7 +13,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UserSchema } from "@/types/schema";
 import { z } from "zod";
 import { useState } from "react";
-
+// import { Link } from "react-router-dom";
+import { Dashboard } from "./Dashboard";
+import MyContext from "@/context/MyContext";
+import { Provider } from "react";
 type FormValue = z.infer<typeof UserSchema>;
 
 export default function Form() {
@@ -26,11 +29,27 @@ export default function Form() {
 
   const [isClicked, setIsClicked] = useState(false);
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
   const onSubmit: SubmitHandler<FormValue> = (data) => {
+    setName(data.username);
+    setEmail(data.email);
     console.log(`New Entry : ${JSON.stringify(data, null, 2)}`);
     setIsClicked(true);
+    alert(
+      `New account created\nUsername : ${data["username"]}\nEmail : ${data["email"]}`,
+    );
     reset();
   };
+
+  if (isClicked) {
+    return (
+      <MyContext.Provider value={{ name, email }}>
+        <Dashboard />
+      </MyContext.Provider>
+    );
+  }
 
   return (
     <div className="w-full max-w-xs">
@@ -99,7 +118,6 @@ export default function Form() {
               )}
             </Field>
             <Button type="submit">Submit</Button>
-            {isClicked ? <p>Check Console for Data.</p> : <p></p>}
           </FieldGroup>
         </FieldSet>
       </form>
