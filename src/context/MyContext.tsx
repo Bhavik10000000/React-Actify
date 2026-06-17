@@ -1,4 +1,4 @@
 import { createContext } from "react";
 
-const MyContext = createContext(1);
-export default MyContext;
+export type User = { name: string; email: string } | null;
+export const MyContext = createContext<User>(null);
