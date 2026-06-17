@@ -38,7 +38,9 @@ import MyContext from "@/context/MyContext";
 // }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { name, email } = useContext(MyContext);
+  const contextValue = useContext(MyContext) as any;
+  const name = contextValue?.name || "";
+  const email = contextValue?.email || "";
   const data = {
     user: {
       name: name,

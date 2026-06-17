@@ -16,10 +16,9 @@ import { useState } from "react";
 // import { Link } from "react-router-dom";
 import { Dashboard } from "./Dashboard";
 import MyContext from "@/context/MyContext";
-import { Provider } from "react";
 type FormValue = z.infer<typeof UserSchema>;
 
-export default function Form() {
+export default function UserForm() {
   const {
     register,
     handleSubmit,
