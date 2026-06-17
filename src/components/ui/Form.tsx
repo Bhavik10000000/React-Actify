@@ -8,42 +8,50 @@ import {
 import { Input } from "@/components/ui/input";
 import "../../App.css";
 import { Button } from "@/components/ui/button";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { UserSchema } from "@/types/schema";
-import { z } from "zod";
-import { useState } from "react";
+import { useForm, type SubmitHandler, useWatch } from "react-hook-form";
 
-type FormValue = z.infer<typeof UserSchema>;
+interface FormValue {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  age: number;
+}
 
 export default function Form() {
   const {
     register,
     handleSubmit,
-    reset,
+    control,
     formState: { errors },
-  } = useForm<FormValue>({ resolver: zodResolver(UserSchema) });
-
-  const [isClicked, setIsClicked] = useState(false);
+  } = useForm<FormValue>();
 
   const onSubmit: SubmitHandler<FormValue> = (data) => {
-    console.log(`New Entry : ${JSON.stringify(data, null, 2)}`);
-    setIsClicked(true);
-    reset();
+    alert(`New Entry : ${JSON.stringify(data, null, 2)}`);
   };
+
+  const password = useWatch({ control, name: "password" });
 
   return (
     <div className="w-full max-w-xs">
       <form onSubmit={handleSubmit(onSubmit)}>
         <FieldSet>
           <FieldGroup>
-            <h2 className="text-2xl font-bold text-center">
-              Create an Account
-            </h2>
+            <h2>Create an Account</h2>
             <Field>
               <FieldLabel>Username</FieldLabel>
               <Input
-                {...register("username")}
+                {...register("username", {
+                  required: "Username is required",
+                  minLength: {
+                    value: 3,
+                    message: "Username must be minimum of 3 characters.",
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z0-9]+$/,
+                    message: "Username must contains letters and numbers only.",
+                  },
+                })}
                 type="text"
                 placeholder="Bhavik Sapat"
               />
@@ -59,7 +67,9 @@ export default function Form() {
             <Field>
               <FieldLabel>Email</FieldLabel>
               <Input
-                {...register("email")}
+                {...register("email", {
+                  required: "Email is required",
+                })}
                 type="email"
                 placeholder="bhavik@gmail.com"
               />
@@ -75,7 +85,19 @@ export default function Form() {
                 Must be at least 8 characters long.
               </FieldDescription>
               <Input
-                {...register("password")}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be minimum of 6 characters.",
+                  },
+                  pattern: {
+                    value:
+                      /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]+$/,
+                    message:
+                      "Password must contain at least 1 upercase letter, number and a special symbol.",
+                  },
+                })}
                 type="password"
                 placeholder="••••••••"
               />
@@ -88,7 +110,11 @@ export default function Form() {
             <Field>
               <FieldLabel>Confirm Password</FieldLabel>
               <Input
-                {...register("confirmPassword")}
+                {...register("confirmPassword", {
+                  required: "Password is required",
+                  validate: (value) =>
+                    value === password || "Password not matches.",
+                })}
                 type="password"
                 placeholder="••••••••"
               />
@@ -99,7 +125,6 @@ export default function Form() {
               )}
             </Field>
             <Button type="submit">Submit</Button>
-            {isClicked ? <p>Check Console for Data.</p> : <p></p>}
           </FieldGroup>
         </FieldSet>
       </form>
