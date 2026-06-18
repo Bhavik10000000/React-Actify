@@ -1,4 +1,3 @@
-import * as React from "react"
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
 
@@ -19,8 +18,6 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
-        bhavik:"bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/30 focus-visible:ring-destructive/30 dark:bg-destructive/70 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/20",
-
       },
       size: {
         default:
@@ -43,16 +40,12 @@ const buttonVariants = cva(
   }
 )
 
-export interface ButtonProps
-  extends React.ComponentPropsWithoutRef<typeof ButtonPrimitive>,
-    VariantProps<typeof buttonVariants> {}
-
 function Button({
   className,
-  variant,
-  size,
+  variant = "default",
+  size = "default",
   ...props
-}: ButtonProps) {
+}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
   return (
     <ButtonPrimitive
       data-slot="button"

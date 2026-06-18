@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const UserSchema = z
+export const UserSchema1 = z
   .object({
     username: z
       .string()
@@ -34,3 +34,14 @@ export const UserSchema = z
 
 // console.log("Suucess : " + UserSchema.safeParse(user).success);
 // console.log("Error : " + UserSchema.safeParse(user).error);
+
+export const UserSchema2 = z.object({
+  name: z
+    .string()
+    .min(3, { message: "Username must be atleast of 3 characters." })
+    .regex(/^[A-Za-z0-9 ]+$/, {
+      message: "Username must contain letters and numbers only.",
+    }),
+  email: z.string().email({ message: "Enter a valid Email Address." }),
+  role: z.string().min(6, { message: "Role" }),
+});

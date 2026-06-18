@@ -10,13 +10,14 @@ import "../../App.css";
 import { Button } from "@/components/ui/button";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserSchema } from "@/types/schema";
+import { UserSchema1 } from "@/types/schema";
 import { z } from "zod";
 import { useState } from "react";
 // import { Link } from "react-router-dom";
 import { Dashboard } from "./Dashboard";
 import { MyContext } from "@/context/MyContext";
-type FormValue = z.infer<typeof UserSchema>;
+
+type FormValue = z.infer<typeof UserSchema1>;
 
 export default function UserForm() {
   const {
@@ -24,7 +25,7 @@ export default function UserForm() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValue>({ resolver: zodResolver(UserSchema) });
+  } = useForm<FormValue>({ resolver: zodResolver(UserSchema1) });
 
   const [isClicked, setIsClicked] = useState(false);
 
@@ -51,75 +52,77 @@ export default function UserForm() {
   }
 
   return (
-    <div className="w-full max-w-xs">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FieldSet>
-          <FieldGroup>
-            <h2 className="text-2xl font-bold text-center">
-              Create an Account
-            </h2>
-            <Field>
-              <FieldLabel>Username</FieldLabel>
-              <Input
-                {...register("username")}
-                type="text"
-                placeholder="Bhavik Sapat"
-              />
-              <FieldDescription>
-                Choose a unique alphanumeric username.
-              </FieldDescription>
-              {errors.username && (
-                <FieldDescription className="error-msg">
-                  {errors.username.message}
+    <div className="flex-1 w-full flex items-center justify-center">
+      <div className="w-full max-w-xs">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FieldSet>
+            <FieldGroup>
+              <h2 className="text-2xl font-bold text-center">
+                Create an Account
+              </h2>
+              <Field>
+                <FieldLabel>Username</FieldLabel>
+                <Input
+                  {...register("username")}
+                  type="text"
+                  placeholder="Bhavik Sapat"
+                />
+                <FieldDescription>
+                  Choose a unique alphanumeric username.
                 </FieldDescription>
-              )}
-            </Field>
-            <Field>
-              <FieldLabel>Email</FieldLabel>
-              <Input
-                {...register("email")}
-                type="email"
-                placeholder="bhavik@gmail.com"
-              />
-              {errors.email && (
-                <FieldDescription className="error-msg">
-                  {errors.email.message}
+                {errors.username && (
+                  <FieldDescription className="error-msg">
+                    {errors.username.message}
+                  </FieldDescription>
+                )}
+              </Field>
+              <Field>
+                <FieldLabel>Email</FieldLabel>
+                <Input
+                  {...register("email")}
+                  type="email"
+                  placeholder="bhavik@gmail.com"
+                />
+                {errors.email && (
+                  <FieldDescription className="error-msg">
+                    {errors.email.message}
+                  </FieldDescription>
+                )}
+              </Field>
+              <Field>
+                <FieldLabel>Password</FieldLabel>
+                <FieldDescription>
+                  Must be at least 8 characters long.
                 </FieldDescription>
-              )}
-            </Field>
-            <Field>
-              <FieldLabel>Password</FieldLabel>
-              <FieldDescription>
-                Must be at least 8 characters long.
-              </FieldDescription>
-              <Input
-                {...register("password")}
-                type="password"
-                placeholder="••••••••"
-              />
-              {errors.password && (
-                <FieldDescription className="error-msg">
-                  {errors.password.message}
-                </FieldDescription>
-              )}
-            </Field>
-            <Field>
-              <FieldLabel>Confirm Password</FieldLabel>
-              <Input
-                {...register("confirmPassword")}
-                type="password"
-                placeholder="••••••••"
-              />
-              {errors.confirmPassword && (
-                <FieldDescription className="error-msg">
-                  {errors.confirmPassword.message}
-                </FieldDescription>
-              )}
-            </Field>
-            <Button type="submit">Submit</Button>
-          </FieldGroup>
-        </FieldSet>
-      </form>
+                <Input
+                  {...register("password")}
+                  type="password"
+                  placeholder="••••••••"
+                />
+                {errors.password && (
+                  <FieldDescription className="error-msg">
+                    {errors.password.message}
+                  </FieldDescription>
+                )}
+              </Field>
+              <Field>
+                <FieldLabel>Confirm Password</FieldLabel>
+                <Input
+                  {...register("confirmPassword")}
+                  type="password"
+                  placeholder="••••••••"
+                />
+                {errors.confirmPassword && (
+                  <FieldDescription className="error-msg">
+                    {errors.confirmPassword.message}
+                  </FieldDescription>
+                )}
+              </Field>
+              <Button type="submit">Submit</Button>
+            </FieldGroup>
+          </FieldSet>
+        </form>
+      </div>
     </div>
   );
 }
