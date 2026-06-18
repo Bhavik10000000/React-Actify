@@ -12,8 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { UserSchema2 } from "@/types/schema";
-import { z } from "zod";
+// import { UserSchema2 } from "@/types/schema";
+// import { z } from "zod";
 // import type { SubmitHandler } from "react-hook-form";
 // import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -25,7 +25,7 @@ import { z } from "zod";
 
 const App = () => {
   const [id, setId] = useState(2);
-  const [name, setName] = useState();
+  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
 
