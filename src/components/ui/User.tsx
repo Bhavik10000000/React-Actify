@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
@@ -12,69 +11,97 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-// import { UserSchema2 } from "@/types/schema";
-// import { z } from "zod";
-// import type { SubmitHandler } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+  FieldSet,
+} from "@/components/ui/field";
+import "../../App.css";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { UserSchema2 } from "@/types/schema";
+import { z } from "zod";
 
-// type UserValue = z.infer<typeof UserSchema2>;
-
-// interface UserListItem extends UserValue {
-//   id: number;
-// }
+type FormValue = z.infer<typeof UserSchema2>;
 
 const App = () => {
-  const [id, setId] = useState(2);
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormValue>({ resolver: zodResolver(UserSchema2) });
 
-  const handleSubmit = () => {
+  const [id, setId] = useState(6);
+  const [role, setRole] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const onSubmit: SubmitHandler<FormValue> = (data) => {
+    setName(data.name);
+    setEmail(data.email);
+    setRole(data.role);
     if (name && email && role) {
       setId((e) => e + 1);
       Users.push({ ...Users, id: id, name: name, email: email, role: role });
+      alert(
+        `New account created\nname : ${data["name"]}\nEmail : ${data["email"]}\nRole : ${data["role"]}`,
+      );
+      reset();
     }
   };
+
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-start gap-12 p-6">
       <div className="w-full max-w-xs">
-        <FieldGroup>
-          <h2>Create User</h2>
-          <Field>
-            <FieldLabel>Name</FieldLabel>
-            <Input
-              id="fieldgroup-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Bhavik Sapat"
-            />
-          </Field>
-          <Field>
-            <FieldLabel>Email</FieldLabel>
-            <Input
-              id="fieldgroup-email"
-              type="email"
-              placeholder="bhavik@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {/* <FieldDescription>-</FieldDescription> */}
-          </Field>
-          <Field>
-            <FieldLabel>Role</FieldLabel>
-            <Input
-              id="fieldgroup-role"
-              placeholder="User"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            />
-          </Field>
-          <Field orientation="horizontal">
-            <Button type="submit" onClick={handleSubmit}>
-              Create
-            </Button>
-          </Field>
-        </FieldGroup>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FieldSet>
+            <FieldGroup>
+              <h2 className="text-2xl font-bold text-center">Create an User</h2>
+              <Field>
+                <FieldLabel>Name</FieldLabel>
+                <Input
+                  {...register("name")}
+                  type="text"
+                  placeholder="Bhavik Sapat"
+                />
+                {errors.name && (
+                  <FieldDescription className="error-msg">
+                    {errors.name.message}
+                  </FieldDescription>
+                )}
+              </Field>
+
+              <Field>
+                <FieldLabel>Email</FieldLabel>
+                <Input
+                  {...register("email")}
+                  type="email"
+                  placeholder="bhavik@gmail.com"
+                />
+                {errors.email && (
+                  <FieldDescription className="error-msg">
+                    {errors.email.message}
+                  </FieldDescription>
+                )}
+              </Field>
+
+              <Field>
+                <FieldLabel>Role</FieldLabel>
+                <Input {...register("role")} type="text" placeholder="User" />
+                {errors.role && (
+                  <FieldDescription className="error-msg">
+                    {errors.role.message}
+                  </FieldDescription>
+                )}
+              </Field>
+
+              <Button type="submit">Submit</Button>
+            </FieldGroup>
+          </FieldSet>
+        </form>
       </div>
       <br />
       <div className="w-full max-w-4xl px-4">
@@ -85,13 +112,36 @@ const App = () => {
 };
 export default App;
 
-//
 const Users = [
   {
     id: 1,
     name: "Bhavik",
     email: "sapatbhavik101@gmail.com",
     role: "Admin",
+  },
+  {
+    id: 2,
+    name: "Pratham",
+    email: "prathampatil@gmail.com",
+    role: "User",
+  },
+  {
+    id: 3,
+    name: "Talha",
+    email: "khantalha@gmail.com",
+    role: "User",
+  },
+  {
+    id: 4,
+    name: "Sachin",
+    email: "guptasachin@gmail.com",
+    role: "User",
+  },
+  {
+    id: 5,
+    name: "Soham",
+    email: "galandesoham@gmail.com",
+    role: "User",
   },
 ];
 

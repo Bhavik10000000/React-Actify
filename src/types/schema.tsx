@@ -35,13 +35,30 @@ export const UserSchema1 = z
 // console.log("Suucess : " + UserSchema.safeParse(user).success);
 // console.log("Error : " + UserSchema.safeParse(user).error);
 
-export const UserSchema2 = z.object({
-  name: z
-    .string()
-    .min(3, { message: "Username must be atleast of 3 characters." })
-    .regex(/^[A-Za-z0-9 ]+$/, {
-      message: "Username must contain letters and numbers only.",
+export const UserSchema2 = z
+  .object({
+    name: z
+      .string()
+      .min(3, { message: "Username must be atleast of 3 characters." })
+      .regex(/^[A-Za-z0-9 ]+$/, {
+        message: "Username must contain letters and numbers only.",
+      }),
+    email: z.string().email({ message: "Enter a valid Email Address." }),
+    role: z.string({
+      message: "Role must be either User or Admin.",
     }),
-  email: z.string().email({ message: "Enter a valid Email Address." }),
-  role: z.string().min(6, { message: "Role" }),
-});
+  })
+  .refine(
+    (data) =>
+      data.role === "admin" ||
+      data.role === "Admin" ||
+      data.role === "user" ||
+      data.role === "User",
+    {
+      message: "Role must be either User or Admin.",
+    },
+  );
+
+// interface IDSchema {
+//   id: z.number
+// }
