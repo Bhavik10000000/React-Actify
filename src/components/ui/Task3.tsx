@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { fetchUser } from "../../store/slices/userSlice";
-import * as React from "react";
 import { PlusIcon } from "lucide-react";
 import { useAppDispatch } from "@/store";
 
