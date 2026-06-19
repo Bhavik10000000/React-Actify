@@ -6,11 +6,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EmptyCom from "./components/ui/EmptyCom.jsx";
 import { Dashboard } from "./components/ui/Dashboard";
 import User from "@/components/ui/User";
+import Task3 from "./components/ui/Task3.js";
+import { Toaster } from "./components/ui/sonner";
 const App = () => {
   return (
     <BrowserRouter>
       <div className="w-full min-h-screen bg-slate-50 flex flex-col">
-        <Tabs defaultValue="task2" className="w-full flex flex-col flex-1">
+        <Tabs defaultValue="task3" className="w-full flex flex-col flex-1">
           <div className="sticky top-0 z-50 w-full h-auto bg-white p-3 shadow-sm flex justify-center border-b">
             <TabsList className="w-[400px]  grid grid-cols-4">
               <TabsTrigger value="task1">Task 1</TabsTrigger>
@@ -38,7 +40,7 @@ const App = () => {
               value="task3"
               className="w-full flex justify-center m-0 outline-none"
             >
-              <EmptyCom />
+              <Task3 />
             </TabsContent>
             <TabsContent
               value="task4"
@@ -49,9 +51,10 @@ const App = () => {
           </div>
         </Tabs>
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
         </Routes>
       </div>
+      <Toaster position="top-right" richColors />
     </BrowserRouter>
   );
 };

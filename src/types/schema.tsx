@@ -58,7 +58,3 @@ export const UserSchema2 = z
       message: "Role must be either User or Admin.",
     },
   );
-
-// interface IDSchema {
-//   id: z.number
-// }
