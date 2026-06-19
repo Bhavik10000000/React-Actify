@@ -2,12 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { addUser } from "@/store/slices/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { fetchUser } from "../../store/slices/userSlice";
 import * as React from "react";
 import { PlusIcon } from "lucide-react";
+import { useAppDispatch } from "@/store";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -30,7 +31,7 @@ type RootState = {
 };
 
 const Task3 = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { users, loading, error } = useSelector(
     (state: RootState) => state.user,
   );
