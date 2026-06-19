@@ -1,10 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { addUser } from "@/store/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,21 +9,31 @@ import { fetchUser } from "../../store/slices/userSlice";
 import * as React from "react";
 import { PlusIcon } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   Item,
   ItemActions,
   ItemContent,
-  ItemDescription,
   ItemGroup,
   ItemMedia,
-  ItemSeparator,
   ItemTitle,
 } from "@/components/ui/item";
 
+type UserState = {
+  users: string[];
+  loading: boolean;
+  error: string | null;
+};
+
+type RootState = {
+  user: UserState;
+};
+
 const Task3 = () => {
   const dispatch = useDispatch();
-  const { users, loading, error } = useSelector((state) => state.user);
+  const { users, loading, error } = useSelector(
+    (state: RootState) => state.user,
+  );
   const [name, setName] = useState("");
   const avatar = "https://github.com/shadcn.png";
   useEffect(() => {
