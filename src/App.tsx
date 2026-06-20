@@ -8,6 +8,7 @@ import { Dashboard } from "./components/ui/Dashboard";
 import User from "@/components/ui/User";
 import Task3 from "./components/ui/Task3.js";
 import { Toaster } from "./components/ui/sonner";
+import Task4 from "@/components/ui/Task4";
 const App = () => {
   return (
     <BrowserRouter>
@@ -98,7 +99,7 @@ const App = () => {
               value="task4-5"
               className="w-full flex justify-center m-0 outline-none"
             >
-              <EmptyCom />
+              <Task4 />
             </TabsContent>
             <TabsContent
               value="task6"

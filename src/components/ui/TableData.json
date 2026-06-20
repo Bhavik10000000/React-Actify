@@ -1,0 +1,302 @@
+[
+  {
+    "id": 1,
+    "name": "Bhavik Sapat",
+    "email": "bhavik@gmail.com",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "name": "Talha Kahan",
+    "email": "talha@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 3,
+    "name": "Pratham Patil",
+    "email": "pratham@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 4,
+    "name": "Aarav Sharma",
+    "email": "aarav@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 5,
+    "name": "Ananya Iyer",
+    "email": "ananya@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 6,
+    "name": "Vivaan Mehta",
+    "email": "vivaan@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 7,
+    "name": "Diya Joshi",
+    "email": "diya@gmail.com",
+    "role": "admin"
+  },
+  {
+    "id": 8,
+    "name": "Kabir Verma",
+    "email": "kabir@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 9,
+    "name": "Kiara Rao",
+    "email": "kiara@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 10,
+    "name": "Arjun Gupta",
+    "email": "arjun@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 11,
+    "name": "Isha Malhotra",
+    "email": "isha@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 12,
+    "name": "Sai Reddy",
+    "email": "sai@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 13,
+    "name": "Rohan Das",
+    "email": "rohan@gmail.com",
+    "role": "admin"
+  },
+  {
+    "id": 14,
+    "name": "Aanya Singh",
+    "email": "aanya@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 15,
+    "name": "Reyansh Nair",
+    "email": "reyansh@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 16,
+    "name": "Meera Bose",
+    "email": "meera@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 17,
+    "name": "Krishna Pillai",
+    "email": "krishna@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 18,
+    "name": "Saanvi Kulkarni",
+    "email": "saanvi@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 19,
+    "name": "Dev Mishra",
+    "email": "dev@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 20,
+    "name": "Myra Saxena",
+    "email": "myra@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 21,
+    "name": "Aaryan Kapoor",
+    "email": "aaryan@gmail.com",
+    "role": "admin"
+  },
+  {
+    "id": 22,
+    "name": "Siya Choudhury",
+    "email": "siya@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 23,
+    "name": "Vedant Shah",
+    "email": "vedant@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 24,
+    "name": "Avani Deshmukh",
+    "email": "avani@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 25,
+    "name": "Atharv Joshi",
+    "email": "atharv@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 26,
+    "name": "Riya Banerjee",
+    "email": "riya@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 27,
+    "name": "Ishaan Bhat",
+    "email": "ishaan@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 28,
+    "name": "Anika Trivedi",
+    "email": "anika@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 29,
+    "name": "Shaurya Pandey",
+    "email": "shaurya@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 30,
+    "name": "Aadhya Shetty",
+    "email": "aadhya@gmail.com",
+    "role": "admin"
+  },
+  {
+    "id": 31,
+    "name": "Rudransh Jha",
+    "email": "rudransh@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 32,
+    "name": "Pari Agarwal",
+    "email": "pari@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 33,
+    "name": "Kian Khatri",
+    "email": "kian@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 34,
+    "name": "Ahana Somani",
+    "email": "ahana@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 35,
+    "name": "Dhruv Roy",
+    "email": "dhruv@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 36,
+    "name": "Siddhi Jain",
+    "email": "siddhi@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 37,
+    "name": "Ayush Bajaj",
+    "email": "ayush@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 38,
+    "name": "Prisha Goel",
+    "email": "prisha@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 39,
+    "name": "Yash Singhal",
+    "email": "yash@gmail.com",
+    "role": "admin"
+  },
+  {
+    "id": 40,
+    "name": "Gauri Mahajan",
+    "email": "gauri@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 41,
+    "name": "Hridaan Wadhwa",
+    "email": "hridaan@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 42,
+    "name": "Navya Chawla",
+    "email": "navya@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 43,
+    "name": "Abhimanyu Gill",
+    "email": "abhimanyu@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 44,
+    "name": "Zara Grover",
+    "email": "zara@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 45,
+    "name": "Vihaan Lal",
+    "email": "vihaan@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 46,
+    "name": "Kavya Khanna",
+    "email": "kavya@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 47,
+    "name": "Madhav Thapar",
+    "email": "madhav@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 48,
+    "name": "Sara Oberoi",
+    "email": "sara@gmail.com",
+    "role": "admin"
+  },
+  {
+    "id": 49,
+    "name": "Arnav Mehra",
+    "email": "arnav@gmail.com",
+    "role": "user"
+  },
+  {
+    "id": 50,
+    "name": "Ira Lodha",
+    "email": "ira@gmail.com",
+    "role": "user"
+  }
+]
