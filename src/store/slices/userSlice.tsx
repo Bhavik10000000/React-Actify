@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// const API_URL = "https://www.jsonkeeper.com/b/OMZAZ";
 
 interface UserState {
   users: string[];
@@ -13,11 +12,10 @@ const initialState: UserState = {
   loading: false,
   error: false,
 };
-export const fetchUser = createAsyncThunk("users/fetchUsers", async () => {
+
+export const fetchUser = createAsyncThunk("users/fetchUser", async () => {
   return new Promise<string[]>((resolve) => {
-    setTimeout(() => {
-      resolve(userData);
-    }, 1000);
+    setTimeout(() => resolve(userData), 1000);
   });
 });
 
@@ -55,3 +53,31 @@ const userSlice = createSlice({
 
 export const { addUser, deleteUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;
+
+// const usersSlice = createSlice({
+//   name: "User",
+//   initialState: [{ users: ["Bhavik"], loading: false, error: false }],
+//   reducers: {
+//     addUser(state, action) {
+//       state.users.push(action.payload());
+//     },
+//     deleteUser(state) {
+//       state.users.pop();
+//     },
+//   },
+//   extraReducers: (builder) => {
+//     builder
+//       .addCase(fetchUser.pending, (state) => {
+//         state.loading = true;
+//         state.error = false;
+//       })
+//       .addCase(fetchUser.fulfilled, (state) => {
+//         state.loading = false;
+//         state.error = false;
+//       })
+//       .addCase(fetchUser.rejected, (state) => {
+//         state.loading = false;
+//         state.error = true;
+//       });
+//   },
+// });

@@ -1,0 +1,68 @@
+[
+  {
+    "id": "EMP-001",
+    "name": "Bhavik Bhau Sapat",
+    "email": "bhavik@gmail.com",
+    "phone": 9028965101,
+    "department": "Frontend",
+    "designation": "Intern",
+    "doj": "01-06-2026",
+    "salary": 10,
+    "pass": "123@Bhavik"
+  },
+  {
+    "id": "EMP-002",
+    "name": "Pratham Ganesh Patil",
+    "email": "pratham@gmail.com",
+    "phone": 9028965101,
+    "department": "Power BI",
+    "designation": "Intern",
+    "doj": "01-06-2026",
+    "salary": 10,
+    "pass": "123@Pratham"
+  },
+  {
+    "id": "EMP-003",
+    "name": "Daksh Anil Sevkani",
+    "email": "daksh@gmail.com",
+    "phone": 9028965101,
+    "department": "Frontend",
+    "designation": "Intern",
+    "doj": "01-06-2026",
+    "salary": 10,
+    "pass": "123@Daksh"
+  },
+  {
+    "id": "EMP-004",
+    "name": "Talha Danish Khan",
+    "email": "talha@gmail.com",
+    "phone": 9028965101,
+    "department": "Backend",
+    "designation": "Intern",
+    "doj": "01-06-2026",
+    "salary": 10,
+    "pass": "123@Talha"
+  },
+  {
+    "id": "EMP-005",
+    "name": "Sachin Narendra Gupta",
+    "email": "sachin@gmail.com",
+    "phone": 9028965101,
+    "department": "Backend",
+    "designation": "Intern",
+    "doj": "01-06-2026",
+    "salary": 10,
+    "pass": "123@Sachin"
+  },
+  {
+    "id": "EMP-006",
+    "name": "Soham Prabhakar Galande",
+    "email": "soham@gmail.com",
+    "phone": 9028965101,
+    "department": "Frontend",
+    "designation": "Intern",
+    "doj": "01-06-2026",
+    "salary": 10,
+    "pass": "123@Soham"
+  }
+]

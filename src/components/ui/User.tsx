@@ -1,16 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import {
   Field,
   FieldDescription,
@@ -23,6 +13,17 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserSchema2 } from "@/types/schema";
 import { z } from "zod";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item";
+import { PlusIcon } from "lucide-react";
 
 type FormValue = z.infer<typeof UserSchema2>;
 
@@ -104,7 +105,7 @@ const App = () => {
         </form>
       </div>
       <br />
-      <div className="w-full max-w-4xl px-4">
+      <div className="max-w-4xl px-4">
         <Data />
       </div>
     </div>
@@ -116,59 +117,67 @@ const Users = [
   {
     id: 1,
     name: "Bhavik",
-    email: "sapatbhavik101@gmail.com",
+    email: "bhavik@gmail.com",
     role: "Admin",
   },
   {
     id: 2,
     name: "Pratham",
-    email: "prathampatil@gmail.com",
+    email: "pratham@gmail.com",
     role: "User",
   },
   {
     id: 3,
     name: "Talha",
-    email: "khantalha@gmail.com",
+    email: "talha@gmail.com",
     role: "User",
   },
   {
     id: 4,
     name: "Sachin",
-    email: "guptasachin@gmail.com",
+    email: "sachin@gmail.com",
     role: "User",
   },
   {
     id: 5,
     name: "Soham",
-    email: "galandesoham@gmail.com",
+    email: "soham @gmail.com",
     role: "User",
   },
 ];
 
 const Data = () => {
+  const avatar = "https://github.com/shadcn.png";
   return (
-    <Table>
-      <TableCaption>A list of recent users.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="text-center">Id</TableHead>
-          <TableHead className="text-center">Name</TableHead>
-          <TableHead className="text-center">Email</TableHead>
-          <TableHead className="text-center">Role</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {Users.map((invoice) => (
-          <TableRow key={invoice.id}>
-            <TableCell className="text-center">{invoice.id}</TableCell>
-            <TableCell className="font-medium text-center">
-              {invoice.name}
-            </TableCell>
-            <TableCell className="text-center">{invoice.email}</TableCell>
-            <TableCell className="text-center">{invoice.role}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <>
+      <div className="min-h-screen flex flex-col items-center justify-start gap-12 p-6">
+        <ItemGroup>
+          <h2>Users</h2>
+          {Users.map((person) => (
+            <Item key={person.id} variant="outline">
+              <ItemMedia>
+                <Avatar>
+                  <AvatarImage src={avatar} className="grayscale" />
+                </Avatar>
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>{person.name}</ItemTitle>
+              </ItemContent>
+              <ItemDescription className="items-center">
+                {person.email}
+              </ItemDescription>
+              <ItemDescription className="text-bold">
+                {person.role}
+              </ItemDescription>
+              <ItemActions>
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  <PlusIcon />
+                </Button>
+              </ItemActions>
+            </Item>
+          ))}
+        </ItemGroup>
+      </div>
+    </>
   );
 };

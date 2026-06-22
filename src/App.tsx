@@ -9,14 +9,22 @@ import User from "@/components/ui/User";
 import Task3 from "./components/ui/Task3.js";
 import { Toaster } from "./components/ui/sonner";
 import Task4 from "@/components/ui/Task4";
+import Task from "./components/ui/Task";
+import EmployeeData from "./components/ui/EmployeeData";
 const App = () => {
   return (
     <BrowserRouter>
       <div className="w-full min-h-screen bg-slate-50 flex flex-col">
-        <Tabs defaultValue="task4-5" className="w-full flex flex-col flex-1">
+        <Tabs defaultValue="task" className="w-full flex flex-col flex-1">
           <div className="sticky top-0 z-50 w-full bg-white border-b shadow-sm">
             <div className="w-full overflow-x-auto no-scrollbar md:flex md:justify-center p-3">
               <TabsList className="flex flex-nowrap min-w-max md:w-full md:max-w-3xl h-auto gap-1 p-1 bg-slate-100 ">
+                <TabsTrigger
+                  value="task"
+                  className="px-4 py-2 text-xs sm:text-sm whitespace-nowrap"
+                >
+                  Task
+                </TabsTrigger>{" "}
                 <TabsTrigger
                   value="task1"
                   className="px-4 py-2 text-xs sm:text-sm whitespace-nowrap"
@@ -76,6 +84,12 @@ const App = () => {
           </div>
 
           <div className="flex-1 w-full flex items-center justify-center">
+            <TabsContent
+              value="task"
+              className="w-full flex justify-center m-0 outline-none"
+            >
+              <EmployeeData />
+            </TabsContent>
             <TabsContent
               value="task1"
               className="w-full h-full m-0 outline-none"
