@@ -62,13 +62,15 @@ type EmpType = {
   phone: number;
   department: string;
   designation: string;
-  doj: Date;
+  doj: string;
   salary: number;
   password: string;
   confirmPassword: string;
 };
 
-const columnHelper = createColumnHelper<EmpType>();
+type EmpRow = Omit<EmpType, "password" | "confirmPassword">;
+
+const columnHelper = createColumnHelper<EmpRow>();
 const columns = [
   columnHelper.accessor("id", { header: "ID" }),
   columnHelper.accessor("name", { header: "Name" }),
@@ -82,9 +84,8 @@ const columns = [
 
 const EmployeeData = () => {
   const dispatch = useAppDispatch();
-  const { data, loading, error } = useSelector(
-    (state: RootState) => state.empSlice,
-  );
+  // removed loading,error
+  const { data } = useSelector((state: RootState) => state.empSlice);
   useEffect(() => {
     toast.promise(dispatch(fetchUser()), {
       loading: "Data Loading.",

@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 export const EmpSchema = z
   .object({
     id: z.string().min(3),
@@ -15,9 +16,10 @@ export const EmpSchema = z
       .length(10, { message: "Phone no must contain exaclty 10 numbers." }),
     department: z.string(),
     designation: z.string(),
-    doj: z
-      .string()
-      .max(new Date(), { message: "Joining date must be before tomorrow." }),
+    doj: z.coerce
+      .date()
+      .max(new Date(), { message: "Joining date must be before tomorrow." })
+      .transform((dateObj) => dateObj.toISOString().split("T")[0]),
     salary: z.number().min(0),
     password: z
       .string()

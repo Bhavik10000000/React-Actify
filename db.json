@@ -101,6 +101,30 @@
       "salary": 10,
       "password": "Example@123",
       "confirmPassword": "Example@123"
+    },
+    {
+      "id": "EMP-10",
+      "name": "Bhavik Sapat",
+      "email": "sapatbhavik101@gmail.com",
+      "phone": "1234567890",
+      "department": "FullStack",
+      "designation": "Manager",
+      "doj": "2026-07-03",
+      "salary": 1,
+      "password": "Example@123",
+      "confirmPassword": "Example@123"
+    },
+    {
+      "id": "EMP-11",
+      "name": "Aagam Shah",
+      "email": "bhavik@gmail.com",
+      "phone": "1234567890",
+      "department": "Backend",
+      "designation": "Manager",
+      "doj": "2026-06-01",
+      "salary": 10,
+      "password": "Example@123",
+      "confirmPassword": "Example@123"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
