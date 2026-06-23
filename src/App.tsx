@@ -9,7 +9,6 @@ import User from "@/components/ui/User";
 import Task3 from "./components/ui/Task3.js";
 import { Toaster } from "./components/ui/sonner";
 import Task4 from "@/components/ui/Task4";
-import Task from "./components/ui/Task";
 import EmployeeData from "./components/ui/EmployeeData";
 const App = () => {
   return (
@@ -107,7 +106,7 @@ const App = () => {
               value="task3"
               className="w-full flex justify-center m-0 outline-none"
             >
-              {/* <Task3 /> */}
+              <Task3 />
             </TabsContent>
             <TabsContent
               value="task4-5"
