@@ -16,7 +16,7 @@ export const EmpSchema = z
     department: z.string(),
     designation: z.string(),
     doj: z
-      .date()
+      .string()
       .max(new Date(), { message: "Joining date must be before tomorrow." }),
     salary: z.number().min(0),
     password: z

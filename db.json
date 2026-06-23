@@ -1,0 +1,107 @@
+{
+  "employee": [
+    {
+      "id": "EMP-1",
+      "name": "Bhavik Sapat",
+      "email": "bhavik@gmail.com",
+      "phone": 9028965101,
+      "department": "Frontend",
+      "designation": "Intern",
+      "doj": "2026-06-01",
+      "salary": 10,
+      "password": "123@Bhavik"
+    },
+    {
+      "id": "EMP-2",
+      "name": "Pratham Patil",
+      "email": "pratham@gmail.com",
+      "phone": 9028965101,
+      "department": "Power BI",
+      "designation": "Intern",
+      "doj": "2026-06-01",
+      "salary": 10,
+      "password": "123@Pratham"
+    },
+    {
+      "id": "EMP-3",
+      "name": "Daksh Sevkani",
+      "email": "daksh@gmail.com",
+      "phone": 9028965101,
+      "department": "Frontend",
+      "designation": "Intern",
+      "doj": "2026-06-01",
+      "salary": 10,
+      "password": "123@Daksh"
+    },
+    {
+      "id": "EMP-4",
+      "name": "Talha Khan",
+      "email": "talha@gmail.com",
+      "phone": 9028965101,
+      "department": "Backend",
+      "designation": "Intern",
+      "doj": "2026-06-01",
+      "salary": 10,
+      "password": "123@Talha"
+    },
+    {
+      "id": "EMP-5",
+      "name": "Sachin Gupta",
+      "email": "sachin@gmail.com",
+      "phone": 9028965101,
+      "department": "Backend",
+      "designation": "Intern",
+      "doj": "2026-06-01",
+      "salary": 10,
+      "password": "123@Sachin"
+    },
+    {
+      "id": "EMP-6",
+      "name": "Soham Galande",
+      "email": "soham@gmail.com",
+      "phone": 9028965101,
+      "department": "Frontend",
+      "designation": "Intern",
+      "doj": "2026-06-01",
+      "salary": 10,
+      "password": "123@Soham"
+    },
+    {
+      "id": "EMP-7",
+      "name": "Samiksha Kapadne",
+      "email": "samiksha@gmail.com",
+      "phone": "1234567890",
+      "department": "Backend",
+      "designation": "Intern",
+      "doj": "2026-06-01",
+      "salary": 10,
+      "password": "Example@123",
+      "confirmPassword": "Example@123"
+    },
+    {
+      "id": "EMP-8",
+      "name": "Aditi Godse",
+      "email": "adiit@gmail.com",
+      "phone": "1234567890",
+      "department": "Backend",
+      "designation": "Intern",
+      "doj": "2026-06-01",
+      "salary": 10,
+      "password": "Example@123",
+      "confirmPassword": "Example@123"
+    },
+    {
+      "id": "EMP-9",
+      "name": "Prachi Katkar",
+      "email": "prachi@gmail.com",
+      "phone": "1234567890",
+      "department": "Backend",
+      "designation": "Intern",
+      "doj": "2026-06-01",
+      "salary": 10,
+      "password": "Example@123",
+      "confirmPassword": "Example@123"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

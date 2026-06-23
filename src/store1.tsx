@@ -1,10 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { EmpSlice } from "./features/EmpSlice";
+import userSlice from "./store/slices/userSlice";
 import { useDispatch } from "react-redux";
-
 export const store = configureStore({
-  reducer: { empSlice: EmpSlice.reducer },
+  reducer: { user: userSlice },
 });
+
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
-export type RootState = ReturnType<typeof store.getState>;

@@ -107,7 +107,7 @@ const App = () => {
               value="task3"
               className="w-full flex justify-center m-0 outline-none"
             >
-              <Task3 />
+              {/* <Task3 /> */}
             </TabsContent>
             <TabsContent
               value="task4-5"

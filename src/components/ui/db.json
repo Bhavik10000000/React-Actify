@@ -1,68 +1,68 @@
 [
   {
-    "id": "EMP-001",
+    "id": "EMP-1",
     "name": "Bhavik Bhau Sapat",
     "email": "bhavik@gmail.com",
     "phone": 9028965101,
     "department": "Frontend",
     "designation": "Intern",
-    "doj": "01-06-2026",
+    "doj": "2026-06-01",
     "salary": 10,
-    "pass": "123@Bhavik"
+    "password": "123@Bhavik"
   },
   {
-    "id": "EMP-002",
+    "id": "EMP-2",
     "name": "Pratham Ganesh Patil",
     "email": "pratham@gmail.com",
     "phone": 9028965101,
     "department": "Power BI",
     "designation": "Intern",
-    "doj": "01-06-2026",
+    "doj": "2026-06-01",
     "salary": 10,
-    "pass": "123@Pratham"
+    "password": "123@Pratham"
   },
   {
-    "id": "EMP-003",
+    "id": "EMP-3",
     "name": "Daksh Anil Sevkani",
     "email": "daksh@gmail.com",
     "phone": 9028965101,
     "department": "Frontend",
     "designation": "Intern",
-    "doj": "01-06-2026",
+    "doj": "2026-06-01",
     "salary": 10,
-    "pass": "123@Daksh"
+    "password": "123@Daksh"
   },
   {
-    "id": "EMP-004",
+    "id": "EMP-4",
     "name": "Talha Danish Khan",
     "email": "talha@gmail.com",
     "phone": 9028965101,
     "department": "Backend",
     "designation": "Intern",
-    "doj": "01-06-2026",
+    "doj": "2026-06-01",
     "salary": 10,
-    "pass": "123@Talha"
+    "password": "123@Talha"
   },
   {
-    "id": "EMP-005",
+    "id": "EMP-5",
     "name": "Sachin Narendra Gupta",
     "email": "sachin@gmail.com",
     "phone": 9028965101,
     "department": "Backend",
     "designation": "Intern",
-    "doj": "01-06-2026",
+    "doj": "2026-06-01",
     "salary": 10,
-    "pass": "123@Sachin"
+    "password": "123@Sachin"
   },
   {
-    "id": "EMP-006",
+    "id": "EMP-6",
     "name": "Soham Prabhakar Galande",
     "email": "soham@gmail.com",
     "phone": 9028965101,
     "department": "Frontend",
     "designation": "Intern",
-    "doj": "01-06-2026",
+    "doj": "2026-06-01",
     "salary": 10,
-    "pass": "123@Soham"
+    "password": "123@Soham"
   }
 ]

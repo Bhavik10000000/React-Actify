@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { fetchUser } from "../../store/slices/userSlice";
 import { PlusIcon } from "lucide-react";
-import { useAppDispatch } from "@/store";
+import { useAppDispatch } from "@/store1";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
