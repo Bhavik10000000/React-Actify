@@ -120,7 +120,7 @@ const EmployeeData = () => {
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<EmpValidation>({ resolver: zodResolver(EmpSchema) });
+  } = useForm<EmpValidation>({ resolver: zodResolver(EmpSchema) as any });
 
   const onSubmit = (data: EmpValidation) => {
     const user = { ...data, id: empId };
