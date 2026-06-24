@@ -161,7 +161,7 @@ const EmployeeData = () => {
       dispatch(deleteUser(id as any));
     }
   };
-  const handleEdit = (emp: EmpType) => {
+  const handleEdit = (emp: Partial<EmpValidation>) => {
     setEdit(true);
     reset(emp as any);
   };
