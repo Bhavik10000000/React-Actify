@@ -49,7 +49,7 @@ import {
 } from "@/components/ui/pagination";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
-import { fetchUser, createUser } from "@/features/EmpSlice";
+import { fetchUser, createUser ,deleteUser,updateUser} from "@/features/EmpSlice";
 import { useAppDispatch } from "@/store";
 import type { RootState } from "@/store";
 import { getPaginationRowModel } from "@tanstack/react-table";
@@ -82,23 +82,10 @@ const columns = [
   columnHelper.accessor("salary", { header: "Salary" }),
 ];
 
-const EmployeeData = () => {
-  const dispatch = useAppDispatch();
-  // removed loading,error
-  const { data } = useSelector((state: RootState) => state.empSlice);
-  useEffect(() => {
-    toast.promise(dispatch(fetchUser()), {
-      loading: "Data Loading.",
-      error: "Error occcured.",
-      success: "Data Loaded.",
-    });
-  }, [dispatch]);
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-  // if (error) {
-  //   return <div>Something went wrong...</div>;
-  // }
+const EmployeeData = () => { 
+  const { data ,loading,error} = useSelector((state: RootState) => state.empSlice);
+  const [add, setAdd] = useState(false);
+  const[edit,setEdit]=useState(false);
   const table = useReactTable({
     data,
     columns,
@@ -110,10 +97,14 @@ const EmployeeData = () => {
       },
     },
   });
-  const count = data.length;
-  const empId = `EMP-${count + 1}`;
+  const dispatch = useAppDispatch();
+  
+  // 
+  const maxId = data ? (Math.max(...data.map((emp)=>(parseInt(emp.id.replace("EMP-","")))))):0;
+  // 
+  // const count = data.length;
+  const empId = `EMP-${maxId + 1}`;
   console.log(empId);
-  const [open, setOpen] = useState(false);
   const {
     register,
     control,
@@ -123,20 +114,56 @@ const EmployeeData = () => {
   } = useForm<EmpValidation>({ resolver: zodResolver(EmpSchema) as any });
 
   const onSubmit = (data: EmpValidation) => {
+
+    if(add){
     const user = { ...data, id: empId };
-    dispatch(createUser(user as any));
-    setOpen(false);
+      dispatch(createUser(user as any));
+    setAdd(false);
+    }else if(edit){
+      dispatch(updateUser(data as any));
     reset();
+    }
   };
+  useEffect(() => {
+    toast.promise(dispatch(fetchUser()).unwrap(), {
+      loading: "Data Loading.",
+      success: "Data Loaded.",
+      error: "Error occcured.",
+    });
+  }, [dispatch]);
+  // useEffect(() => {
+  //   toast.promise(dispatch(createUser()), {
+  //     loading: "Creating User.",
+  //     success: "User created.",
+  //     error: "Error occcured.",
+  //   });
+  // }, [dispatch]);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div className="text-red-500">Something went wrong...<br/>{error}</div>;
+  }
+  const handleDelete=(id)=>{
+    const is = confirm(`Confirm to delete the user with ID : ${id} `);
+    if(is){
+      dispatch(deleteUser(id));
+    }
+  }
+  const handleEdit=(emp:EmpType)=>{
+    setEdit(true);
+    reset(emp);
+  }
+
   return (
     <>
-      <div className="overflow-hidden w-full mh-[600px] m-5 pt-0 rounded-md border-2 align-center">
+      <div className="overflow-hidden w-full mh-[800px] m-5 pt-0 rounded-md border-2 align-center">
         <h2 className="pt-4  justify-left">EMPLOYEE DETAILS</h2>
         <div className="overflow-hidden m-5 mt-4 p-0 rounded-md border">
           <div className="w-[300px] justify-right p-2 ml-auto">
             <Field orientation="horizontal">
               <Input type="search" placeholder="Search..." />
-              <Button onClick={() => setOpen(true)}>Add</Button>
+              <Button onClick={() => setAdd(true)}>Add</Button>
             </Field>
           </div>
           <Separator />
@@ -180,6 +207,7 @@ const EmployeeData = () => {
                         variant="ghost"
                         size="sm"
                         className="text-blue-500"
+                        onClick={()=>{handleEdit(row.original)}}
                       >
                         Edit
                       </Button>
@@ -188,6 +216,7 @@ const EmployeeData = () => {
                         variant="ghost"
                         size="sm"
                         className="text-red-500"
+                        onClick={()=>{handleDelete(row.original.id)}}
                       >
                         Delete
                       </Button>
@@ -221,7 +250,9 @@ const EmployeeData = () => {
                 />
               </PaginationItem>
               <PaginationItem>
-                <PaginationContent>5</PaginationContent>
+                <PaginationContent>
+                                <p> Pages : {table.getPageCount()}</p>
+                                </PaginationContent>
               </PaginationItem>
               <PaginationItem>
                 <PaginationNext
@@ -236,8 +267,8 @@ const EmployeeData = () => {
             </PaginationContent>
           </Pagination>
         </div>
-        {open && (
-          <div className="fixed inset-0 z-50 justify-center align-center pt-10 border ">
+        {add && (
+          <div className="fixed inset-0 z-50 justify-center align-center pt-20 border ">
             <div className="w-[700px] max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <FieldLegend className="flex">Employee Details</FieldLegend>
@@ -410,7 +441,189 @@ const EmployeeData = () => {
                   <Button
                     variant="outline"
                     type="button"
-                    onClick={() => setOpen(false)}
+                    onClick={() => setAdd(false)}
+                  >
+                    Cancel
+                  </Button>
+                </Field>
+              </form>
+            </div>
+          </div>
+        )}
+         {edit && (
+          <div className="fixed inset-0 z-50 justify-center align-center pt-20 border ">
+            <div className="w-[700px] max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <FieldLegend className="flex">Employee Details</FieldLegend>
+                <FieldDescription className="flex pb-5 pt-0 ">
+                  Enter employee's appropriate information.
+                </FieldDescription>
+                <FieldSet>
+                  <FieldGroup className=" grid grid-cols-2 gap-4">
+                    <Field>
+                      <FieldLabel>Emp ID</FieldLabel>
+                      <Input
+                        {...register("id")}
+                        type="text"
+                        readOnly
+                      />
+                      {errors.id && (
+                        <FieldDescription className="text-red-500">
+                          {errors.id.message}
+                        </FieldDescription>
+                      )}
+                    </Field>
+                    <Field>
+                      <FieldLabel>Emp Name</FieldLabel>
+                      <Input
+                        {...register("name")}
+                        type="text"
+                        placeholder="Bhavik Sapat"
+                        required
+                      />
+                      {errors.name && (
+                        <FieldDescription className="text-red-500">
+                          {errors.name.message}
+                        </FieldDescription>
+                      )}
+                    </Field>
+                    <Field>
+                      <FieldLabel>Emp Email</FieldLabel>
+                      <Input
+                        {...register("email")}
+                        type="email"
+                        placeholder="bhavik@gmail.com"
+                        required
+                      />
+                      {errors.email && (
+                        <FieldDescription className="text-red-500">
+                          {errors.email.message}
+                        </FieldDescription>
+                      )}
+                    </Field>
+                    <Field>
+                      <FieldLabel>Emp Phone</FieldLabel>
+                      <Input
+                        {...register("phone")}
+                        type="number"
+                        placeholder="1234567890"
+                        required
+                      />
+                      {errors.phone && (
+                        <FieldDescription className="text-red-500">
+                          {errors.phone.message}
+                        </FieldDescription>
+                      )}
+                    </Field>
+                    <Field>
+                      <FieldLabel>Emp Departent</FieldLabel>
+                      <Controller
+                        name="department"
+                        control={control}
+                        rules={{ required: "Department is required." }}
+                        render={({ field }) => (
+                          <Select
+                            value={field.value}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Frontend">Frontend</SelectItem>
+                              <SelectItem value="Backend">Backend</SelectItem>
+                              <SelectItem value="FullStack">
+                                FullStack
+                              </SelectItem>
+                              <SelectItem value="Database">Database</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        )}
+                      />
+                    </Field>
+                    <Field>
+                      <FieldLabel>Emp Designation</FieldLabel>
+                      <Controller
+                        name="designation"
+                        control={control}
+                        rules={{ required: "Designation is required." }}
+                        render={({ field }) => (
+                          <Select
+                            value={field.value}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="HR">HR</SelectItem>
+                              <SelectItem value="Manager">Manager</SelectItem>
+                              <SelectItem value="Employee">Employee</SelectItem>
+                              <SelectItem value="Intern">Intern</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        )}
+                      />
+                    </Field>
+                    <Field>
+                      <FieldLabel>Emp DOJ</FieldLabel>
+                      <Input {...register("doj")} type="date" required />
+                      {errors.doj && (
+                        <FieldDescription className="text-red-500">
+                          {errors.doj.message}
+                        </FieldDescription>
+                      )}
+                    </Field>
+                    <Field>
+                      <FieldLabel>Emp Salary</FieldLabel>
+                      <Input
+                        {...register("salary", { valueAsNumber: true })}
+                        type="number"
+                        placeholder="000.00"
+                        required
+                      />
+                      {errors.salary && (
+                        <FieldDescription className="text-red-500">
+                          {errors.salary.message}
+                        </FieldDescription>
+                      )}
+                    </Field>
+                    <Field>
+                      <FieldLabel>Password</FieldLabel>
+                      <Input
+                        {...register("password")}
+                        type="text"
+                        placeholder="Example@123"
+                        required
+                      />
+                      {errors.password && (
+                        <FieldDescription className="text-red-500">
+                          {errors.password.message}
+                        </FieldDescription>
+                      )}
+                    </Field>
+                    <Field>
+                      <FieldLabel>Confirm Password</FieldLabel>
+                      <Input
+                        {...register("confirmPassword")}
+                        type="text"
+                        placeholder="Example@123"
+                        required
+                      />
+                      {errors.confirmPassword && (
+                        <FieldDescription className="text-red-500">
+                          {errors.confirmPassword.message}
+                        </FieldDescription>
+                      )}
+                    </Field>
+                  </FieldGroup>
+                </FieldSet>
+                <Field orientation="horizontal" className="justify-center pt-2">
+                  <Button type="submit">Submit</Button>
+                  <Button
+                    variant="outline"
+                    type="button"
+                    onClick={() => setEdit(false)}
                   >
                     Cancel
                   </Button>

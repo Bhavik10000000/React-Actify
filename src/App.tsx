@@ -10,9 +10,12 @@ import Task3 from "./components/ui/Task3.js";
 import { Toaster } from "./components/ui/sonner";
 import Task4 from "@/components/ui/Task4";
 import EmployeeData from "./components/ui/EmployeeData";
+import { Provider } from "react-redux";
+import { store } from "./store1.tsx";
 const App = () => {
   return (
     <BrowserRouter>
+    {/* <Provider store={store}> */}
       <div className="w-full min-h-screen bg-slate-50 flex flex-col">
         <Tabs defaultValue="task" className="w-full flex flex-col flex-1">
           <div className="sticky top-0 z-50 w-full bg-white border-b shadow-sm">
@@ -151,6 +154,7 @@ const App = () => {
         </Routes>
       </div>
       <Toaster position="top-right" richColors />
+      {/* </Provider> */}
     </BrowserRouter>
   );
 };

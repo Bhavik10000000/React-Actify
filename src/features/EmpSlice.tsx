@@ -9,6 +9,8 @@ export interface EmpType {
   designation: string;
   doj: string;
   salary: number;
+  password: string;
+  confirmPassword: string;
 }
 
 interface EmpState {
@@ -27,7 +29,7 @@ export const fetchUser = createAsyncThunk(
   "users/fetchUsers",
   async (_, thunkAPI) => {
     try {
-      const response = await fetch("http://localhost:5000/employee");
+      const response = await fetch("http://localhost:10000/employee");
       if (!response.ok) {
         throw new Error("Server error, Failed to load data.");
       }
@@ -39,12 +41,12 @@ export const fetchUser = createAsyncThunk(
 );
 export const createUser = createAsyncThunk(
   "user/createUser",
-  async (user, thunkAPI) => {
+  async (users, thunkAPI) => {
     try {
-      const response = await fetch("http://localhost:5000/employee", {
+      const response = await fetch("http://localhost:10000/employee", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
+        body: JSON.stringify(users),
       });
       if (!response.ok) {
         throw new Error("Failed to add new user.");
@@ -55,6 +57,39 @@ export const createUser = createAsyncThunk(
     }
   },
 );
+export const deleteUser = createAsyncThunk("user/deleteUser",async(id,thunkAPI)=>{try{
+  const response = await fetch(`http://localhost:10000/employee/${id}`,{
+    method:"DELETE",
+  });
+  if (!response.ok) {
+        throw new Error("Failed to delete user.");
+      }
+      // const data =  await response.json();
+      return id;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    
+}});
+export const updateUser = createAsyncThunk(
+  "user/updateUser",
+  async (user:EmpType, thunkAPI) => {
+    try {
+      const response = await fetch(`http://localhost:10000/employee/${user.id}`, {
+        method: "PUT",
+        // PUT OR PATCH
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update user.");
+      }
+      return await response.json();
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+);
+
 export const EmpSlice = createSlice({
   name: "empSlice",
   initialState,
@@ -72,15 +107,44 @@ export const EmpSlice = createSlice({
       .addCase(fetchUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+        state.data = [];
       })
       .addCase(createUser.pending, (state) => {
         state.loading = true;
+        state.error=null;
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.loading = false;
         state.data.push(action.payload);
       })
       .addCase(createUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deleteUser.pending, (state) => {
+        state.loading = true;
+        state.error=null;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = state.data.filter((data:any)=>data.id !== action.payload)
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+        state.error=null;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.data = state.data.filter((data:any)=>data.id !== action.payload)
+        const index = state.data.findIndex(emp=>emp.id === action.payload)
+        state.data[index] = action.payload;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
