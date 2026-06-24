@@ -19,6 +19,7 @@ import { Controller, useForm } from "react-hook-form";
 import { createColumnHelper } from "@tanstack/react-table";
 import {
   flexRender,
+  getFilteredRowModel,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -49,7 +50,12 @@ import {
 } from "@/components/ui/pagination";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
-import { fetchUser, createUser ,deleteUser,updateUser} from "@/features/EmpSlice";
+import {
+  fetchUser,
+  createUser,
+  deleteUser,
+  updateUser,
+} from "@/features/EmpSlice";
 import { useAppDispatch } from "@/store";
 import type { RootState } from "@/store";
 import { getPaginationRowModel } from "@tanstack/react-table";
@@ -82,14 +88,22 @@ const columns = [
   columnHelper.accessor("salary", { header: "Salary" }),
 ];
 
-const EmployeeData = () => { 
-  const { data ,loading,error} = useSelector((state: RootState) => state.empSlice);
+const EmployeeData = () => {
+  const { data, loading, error } = useSelector(
+    (state: RootState) => state.empSlice,
+  );
   const [add, setAdd] = useState(false);
-  const[edit,setEdit]=useState(false);
+  const [edit, setEdit] = useState(false);
+  const [globalFilter, setGlobalFilter] = useState("");
   const table = useReactTable({
     data,
     columns,
+    state: {
+      globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
       pagination: {
@@ -98,10 +112,12 @@ const EmployeeData = () => {
     },
   });
   const dispatch = useAppDispatch();
-  
-  // 
-  const maxId = data ? (Math.max(...data.map((emp)=>(parseInt(emp.id.replace("EMP-","")))))):0;
-  // 
+
+  //
+  const maxId = data
+    ? Math.max(...data.map((emp) => parseInt(emp.id.replace("EMP-", ""))))
+    : 0;
+  //
   // const count = data.length;
   const empId = `EMP-${maxId + 1}`;
   console.log(empId);
@@ -114,14 +130,13 @@ const EmployeeData = () => {
   } = useForm<EmpValidation>({ resolver: zodResolver(EmpSchema) as any });
 
   const onSubmit = (data: EmpValidation) => {
-
-    if(add){
-    const user = { ...data, id: empId };
+    if (add) {
+      const user = { ...data, id: empId };
       dispatch(createUser(user as any));
-    setAdd(false);
-    }else if(edit){
+      setAdd(false);
+    } else if (edit) {
       dispatch(updateUser(data as any));
-    reset();
+      reset();
     }
   };
   useEffect(() => {
@@ -142,18 +157,24 @@ const EmployeeData = () => {
     return <div>Loading...</div>;
   }
   if (error) {
-    return <div className="text-red-500">Something went wrong...<br/>{error}</div>;
+    return (
+      <div className="text-red-500">
+        Something went wrong...
+        <br />
+        {error}
+      </div>
+    );
   }
-  const handleDelete=(id)=>{
+  const handleDelete = (id: string) => {
     const is = confirm(`Confirm to delete the user with ID : ${id} `);
-    if(is){
+    if (is) {
       dispatch(deleteUser(id));
     }
-  }
-  const handleEdit=(emp:EmpType)=>{
+  };
+  const handleEdit = (emp: EmpType) => {
     setEdit(true);
     reset(emp);
-  }
+  };
 
   return (
     <>
@@ -162,7 +183,14 @@ const EmployeeData = () => {
         <div className="overflow-hidden m-5 mt-4 p-0 rounded-md border">
           <div className="w-[300px] justify-right p-2 ml-auto">
             <Field orientation="horizontal">
-              <Input type="search" placeholder="Search..." />
+              <Input
+                type="search"
+                placeholder="Search..."
+                value={globalFilter}
+                onChange={(e) => {
+                  setGlobalFilter(e.target.value);
+                }}
+              />
               <Button onClick={() => setAdd(true)}>Add</Button>
             </Field>
           </div>
@@ -207,7 +235,9 @@ const EmployeeData = () => {
                         variant="ghost"
                         size="sm"
                         className="text-blue-500"
-                        onClick={()=>{handleEdit(row.original)}}
+                        onClick={() => {
+                          handleEdit(row.original);
+                        }}
                       >
                         Edit
                       </Button>
@@ -216,7 +246,9 @@ const EmployeeData = () => {
                         variant="ghost"
                         size="sm"
                         className="text-red-500"
-                        onClick={()=>{handleDelete(row.original.id)}}
+                        onClick={() => {
+                          handleDelete(row.original.id);
+                        }}
                       >
                         Delete
                       </Button>
@@ -251,8 +283,8 @@ const EmployeeData = () => {
               </PaginationItem>
               <PaginationItem>
                 <PaginationContent>
-                                <p> Pages : {table.getPageCount()}</p>
-                                </PaginationContent>
+                  <p> Pages : {table.getPageCount()}</p>
+                </PaginationContent>
               </PaginationItem>
               <PaginationItem>
                 <PaginationNext
@@ -450,7 +482,7 @@ const EmployeeData = () => {
             </div>
           </div>
         )}
-         {edit && (
+        {edit && (
           <div className="fixed inset-0 z-50 justify-center align-center pt-20 border ">
             <div className="w-[700px] max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -462,11 +494,7 @@ const EmployeeData = () => {
                   <FieldGroup className=" grid grid-cols-2 gap-4">
                     <Field>
                       <FieldLabel>Emp ID</FieldLabel>
-                      <Input
-                        {...register("id")}
-                        type="text"
-                        readOnly
-                      />
+                      <Input {...register("id")} type="text" readOnly />
                       {errors.id && (
                         <FieldDescription className="text-red-500">
                           {errors.id.message}
