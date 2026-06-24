@@ -113,12 +113,9 @@ const EmployeeData = () => {
   });
   const dispatch = useAppDispatch();
 
-  //
   const maxId = data
     ? Math.max(...data.map((emp) => parseInt(emp.id.replace("EMP-", ""))))
     : 0;
-  //
-  // const count = data.length;
   const empId = `EMP-${maxId + 1}`;
   console.log(empId);
   const {
@@ -146,13 +143,6 @@ const EmployeeData = () => {
       error: "Error occcured.",
     });
   }, [dispatch]);
-  // useEffect(() => {
-  //   toast.promise(dispatch(createUser()), {
-  //     loading: "Creating User.",
-  //     success: "User created.",
-  //     error: "Error occcured.",
-  //   });
-  // }, [dispatch]);
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -171,9 +161,9 @@ const EmployeeData = () => {
       dispatch(deleteUser(id as any));
     }
   };
-  const handleEdit = (emp) => {
+  const handleEdit = (emp: EmpType) => {
     setEdit(true);
-    reset(emp);
+    reset(emp as any);
   };
 
   return (
