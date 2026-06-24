@@ -263,6 +263,18 @@
       "salary": 1000,
       "password": "Example@123",
       "confirmPassword": "Example@123"
+    },
+    {
+      "id": "EMP-24",
+      "name": "Bhavik Sapat",
+      "email": "sapatbhavik101@gmail.com",
+      "phone": "1234567890",
+      "department": "Frontend",
+      "designation": "Intern",
+      "doj": "2026-06-01",
+      "salary": 0,
+      "password": "Sapatbhavik101@",
+      "confirmPassword": "Sapatbhavik101@"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

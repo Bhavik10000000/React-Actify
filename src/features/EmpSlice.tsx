@@ -4,7 +4,7 @@ export interface EmpType {
   id: string;
   name: string;
   email: string;
-  phone: number;
+  phone: string;
   department: string;
   designation: string;
   doj: string;
@@ -57,29 +57,36 @@ export const createUser = createAsyncThunk(
     }
   },
 );
-export const deleteUser = createAsyncThunk("user/deleteUser",async(id,thunkAPI)=>{try{
-  const response = await fetch(`http://localhost:10000/employee/${id}`,{
-    method:"DELETE",
-  });
-  if (!response.ok) {
+export const deleteUser = createAsyncThunk(
+  "user/deleteUser",
+  async (id, thunkAPI) => {
+    try {
+      const response = await fetch(`http://localhost:10000/employee/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
         throw new Error("Failed to delete user.");
       }
       // const data =  await response.json();
       return id;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
-    
-}});
+    }
+  },
+);
 export const updateUser = createAsyncThunk(
   "user/updateUser",
-  async (user:EmpType, thunkAPI) => {
+  async (user: EmpType, thunkAPI) => {
     try {
-      const response = await fetch(`http://localhost:10000/employee/${user.id}`, {
-        method: "PUT",
-        // PUT OR PATCH
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-      });
+      const response = await fetch(
+        `http://localhost:10000/employee/${user.id}`,
+        {
+          method: "PUT",
+          // PUT OR PATCH
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(user),
+        },
+      );
       if (!response.ok) {
         throw new Error("Failed to update user.");
       }
@@ -111,7 +118,7 @@ export const EmpSlice = createSlice({
       })
       .addCase(createUser.pending, (state) => {
         state.loading = true;
-        state.error=null;
+        state.error = null;
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.loading = false;
@@ -123,25 +130,27 @@ export const EmpSlice = createSlice({
       })
       .addCase(deleteUser.pending, (state) => {
         state.loading = true;
-        state.error=null;
+        state.error = null;
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = state.data.filter((data:any)=>data.id !== action.payload)
+        state.data = state.data.filter(
+          (data: any) => data.id !== action.payload,
+        );
       })
       .addCase(deleteUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
-      
+
       .addCase(updateUser.pending, (state) => {
         state.loading = true;
-        state.error=null;
+        state.error = null;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
         // state.data = state.data.filter((data:any)=>data.id !== action.payload)
-        const index = state.data.findIndex(emp=>emp.id === action.payload)
+        const index = state.data.findIndex((emp) => emp.id === action.payload);
         state.data[index] = action.payload;
       })
       .addCase(updateUser.rejected, (state, action) => {

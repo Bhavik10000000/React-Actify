@@ -65,7 +65,7 @@ type EmpType = {
   id: string;
   name: string;
   email: string;
-  phone: number;
+  phone: string;
   department: string;
   designation: string;
   doj: string;
