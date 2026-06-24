@@ -168,10 +168,10 @@ const EmployeeData = () => {
   const handleDelete = (id: string) => {
     const is = confirm(`Confirm to delete the user with ID : ${id} `);
     if (is) {
-      dispatch(deleteUser(id));
+      dispatch(deleteUser(id as any));
     }
   };
-  const handleEdit = (emp: EmpType) => {
+  const handleEdit = (emp) => {
     setEdit(true);
     reset(emp);
   };
