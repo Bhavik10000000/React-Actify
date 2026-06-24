@@ -11,7 +11,7 @@ export const EmpSchema = z
       .min(3)
       .regex(/^[a-zA-Z ]+$/, { message: "Name only contains letters.." }),
     email: z.email(),
-    phone: z
+    phone: z.coerce
       .string()
       .length(10, { message: "Phone no must contain exaclty 10 numbers." }),
     department: z.string(),
