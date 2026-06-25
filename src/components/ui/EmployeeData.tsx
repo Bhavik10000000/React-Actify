@@ -24,12 +24,12 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+// import {
+//   DropdownMenu,
+//   DropdownMenuCheckboxItem,
+//   DropdownMenuContent,
+//   DropdownMenuTrigger,
+// } from "@/components/ui/dropdown-menu";
 import type { VisibilityState } from "@tanstack/react-table";
 import {
   Table,
@@ -67,6 +67,7 @@ import { useAppDispatch } from "@/store";
 import type { RootState } from "@/store";
 import { getPaginationRowModel } from "@tanstack/react-table";
 
+// Types
 type EmpValidation = z.infer<typeof EmpSchema>;
 type EmpType = {
   id: string;
@@ -80,9 +81,9 @@ type EmpType = {
   password: string;
   confirmPassword: string;
 };
-
 type EmpRow = Omit<EmpType, "password" | "confirmPassword">;
 
+// Columns
 const columnHelper = createColumnHelper<EmpRow>();
 const columns = [
   columnHelper.accessor("id", { header: "ID" }),
@@ -95,18 +96,21 @@ const columns = [
   columnHelper.accessor("salary", { header: "Salary" }),
 ];
 
+// Main Page
 const EmployeeData = () => {
+  // Rows
   const [roww, setRow] = useState(5);
-
+  // Sooners
   const { data, loading, error } = useSelector(
     (state: RootState) => state.empSlice,
   );
+  // Features
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnFilters, setColumnFilters] = useState([]);
-
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  // Tanstack Table
   const table = useReactTable({
     data,
     columns,
@@ -127,15 +131,17 @@ const EmployeeData = () => {
       },
     },
   });
+
   const dispatch = useAppDispatch();
   const [designation, setDesignation] = useState("");
   const [department, setDepartment] = useState("");
-
+  // Auto EMP ID
   const maxId = data
     ? Math.max(...data.map((emp) => parseInt(emp.id.replace("EMP-", ""))))
     : 0;
   const empId = `EMP-${maxId + 1}`;
-  console.log(empId);
+  // console.log(empId);
+  // Form
   const {
     register,
     control,
@@ -154,6 +160,7 @@ const EmployeeData = () => {
       reset();
     }
   };
+  //
   useEffect(() => {
     table.setPageSize(roww);
   }, [roww, table]);
@@ -264,7 +271,7 @@ const EmployeeData = () => {
             >
               Clear Filter
             </Button>{" "}
-            <div className="ml-auto">
+            {/* <div className="ml-auto">
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Button variant="outline" className="ml-auto">
@@ -291,7 +298,7 @@ const EmployeeData = () => {
                     })}
                 </DropdownMenuContent>
               </DropdownMenu>
-            </div>
+            </div> */}
           </div>
           <Separator />
           <Table>

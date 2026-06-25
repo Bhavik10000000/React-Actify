@@ -6,7 +6,6 @@ import {
   AvatarGroupCount,
   AvatarImage,
 } from "@/components/ui/avatar";
-import * as React from "react";
 import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 
