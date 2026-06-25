@@ -10,6 +10,7 @@ import Task3 from "./components/ui/Task3.js";
 import { Toaster } from "./components/ui/sonner";
 import Task4 from "@/components/ui/Task4";
 import EmployeeData from "./components/ui/EmployeeData";
+import Task6 from "./components/ui/Task6.js";
 const App = () => {
   return (
     <BrowserRouter>
@@ -119,7 +120,7 @@ const App = () => {
               value="task6"
               className="w-full flex justify-center m-0 outline-none"
             >
-              <EmptyCom />
+              <Task6 />
             </TabsContent>
             <TabsContent
               value="task7"

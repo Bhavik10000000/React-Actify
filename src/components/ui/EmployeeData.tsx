@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import {
   Select,
+  SelectGroup,
   SelectContent,
   SelectItem,
   SelectTrigger,
@@ -23,7 +24,13 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import type { VisibilityState } from "@tanstack/react-table";
 import {
   Table,
   TableBody,
@@ -89,29 +96,40 @@ const columns = [
 ];
 
 const EmployeeData = () => {
+  const [roww, setRow] = useState(5);
+
   const { data, loading, error } = useSelector(
     (state: RootState) => state.empSlice,
   );
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
+  const [columnFilters, setColumnFilters] = useState([]);
+
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const table = useReactTable({
     data,
     columns,
     state: {
       globalFilter,
+      columnFilters,
+      columnVisibility,
     },
     onGlobalFilterChange: setGlobalFilter,
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
     initialState: {
       pagination: {
-        pageSize: 5,
+        pageSize: roww,
       },
     },
   });
   const dispatch = useAppDispatch();
+  const [designation, setDesignation] = useState("");
+  const [department, setDepartment] = useState("");
 
   const maxId = data
     ? Math.max(...data.map((emp) => parseInt(emp.id.replace("EMP-", ""))))
@@ -136,6 +154,9 @@ const EmployeeData = () => {
       reset();
     }
   };
+  useEffect(() => {
+    table.setPageSize(roww);
+  }, [roww, table]);
   useEffect(() => {
     toast.promise(dispatch(fetchUser()).unwrap(), {
       loading: "Data Loading.",
@@ -165,13 +186,12 @@ const EmployeeData = () => {
     setEdit(true);
     reset(emp as any);
   };
-
   return (
     <>
       <div className="overflow-hidden w-full mh-[800px] m-5 pt-0 rounded-md border-2 align-center">
         <h2 className="pt-4  justify-left">EMPLOYEE DETAILS</h2>
         <div className="overflow-hidden m-5 mt-4 p-0 rounded-md border">
-          <div className="w-[300px] justify-right p-2 ml-auto">
+          <div className="w-[400px] justify-right p-2 ml-auto">
             <Field orientation="horizontal">
               <Input
                 type="search"
@@ -181,8 +201,97 @@ const EmployeeData = () => {
                   setGlobalFilter(e.target.value);
                 }}
               />
-              <Button onClick={() => setAdd(true)}>Add</Button>
+              <Button onClick={() => setAdd(true)} variant="outline">
+                Add
+              </Button>
             </Field>
+          </div>
+          <div className="w-auto justify-left p-2 gap-2 flex ">
+            <FieldLabel className="pr-5">Filter</FieldLabel>
+            <Input
+              value={
+                (table.getColumn("name")?.getFilterValue() as string) ?? ""
+              }
+              className="w-[150px]"
+              type="text"
+              placeholder="Name"
+              onChange={(e) =>
+                table.getColumn("name")?.setFilterValue(e.target.value)
+              }
+            />
+            <Select
+              name={department}
+              onValueChange={(value) => {
+                setDepartment(value as any);
+                table.getColumn("department")?.setFilterValue(value);
+              }}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Department" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Frontend">Frontend</SelectItem>
+                <SelectItem value="Backend">Backend</SelectItem>
+                <SelectItem value="FullStack">FullStack</SelectItem>
+                <SelectItem value="Database">Database</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select
+              name={designation}
+              onValueChange={(value) => {
+                setDesignation(value as any);
+                table.getColumn("designation")?.setFilterValue(value);
+              }}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Designation" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="HR">HR</SelectItem>
+                <SelectItem value="Manager">Manager</SelectItem>
+                <SelectItem value="Employee">Employee</SelectItem>
+                <SelectItem value="Intern">Intern</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button
+              onClick={() => {
+                setColumnFilters([]);
+                setGlobalFilter("");
+                setDepartment("");
+                setDesignation("");
+              }}
+              variant="outline"
+            >
+              Clear Filter
+            </Button>{" "}
+            <div className="ml-auto">
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Button variant="outline" className="ml-auto">
+                    Columns
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {table
+                    .getAllColumns()
+                    .filter((column) => column.getCanHide())
+                    .map((column) => {
+                      return (
+                        <DropdownMenuCheckboxItem
+                          key={column.id}
+                          className="capitalize"
+                          checked={column.getIsVisible()}
+                          onCheckedChange={(value) =>
+                            column.toggleVisibility(!!value)
+                          }
+                        >
+                          {column.id}
+                        </DropdownMenuCheckboxItem>
+                      );
+                    })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
           <Separator />
           <Table>
@@ -259,7 +368,28 @@ const EmployeeData = () => {
           </Table>
         </div>
         <div className="justify-center pb-2">
+          {" "}
           <Pagination className="mx-0 w-auto">
+            <FieldLabel>Rows per page</FieldLabel>
+            <Select
+              defaultValue="5"
+              name="roww"
+              onValueChange={(value) => {
+                setRow(value as any);
+              }}
+            >
+              <SelectTrigger className="w-20" id="select-rows-per-page">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent align="start">
+                <SelectGroup>
+                  <SelectItem value="5">5</SelectItem>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="25">25</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious
