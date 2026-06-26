@@ -65,13 +65,13 @@
   "main": "eslint.config.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bhavik10000000/React-Actify.git"
+    "url": "git+https://github.com/bhaviksapat/React-Actify.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Bhavik10000000/React-Actify/issues"
+    "url": "https://github.com/bhaviksapat/React-Actify/issues"
   },
-  "homepage": "https://github.com/Bhavik10000000/React-Actify#readme"
+  "homepage": "https://github.com/bhaviksapat/React-Actify#readme"
 }
