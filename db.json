@@ -8,7 +8,7 @@
       "department": "Database",
       "designation": "Employee",
       "doj": "2024-06-01",
-      "salary": 65000,
+      "salary": 100,
       "password": "Example@123",
       "confirmPassword": "Example@123"
     },
@@ -42,7 +42,7 @@
       "email": "aditigodse8825@gmail.com",
       "phone": "7021471454",
       "department": "Backend",
-      "designation": "Employee",
+      "designation": "Intern",
       "doj": "2024-08-12",
       "salary": 68000,
       "password": "Example@123",
@@ -417,6 +417,18 @@
       "designation": "Manager",
       "doj": "2022-07-18",
       "salary": 122000,
+      "password": "Example@123",
+      "confirmPassword": "Example@123"
+    },
+    {
+      "id": "EMP-36",
+      "name": "Aaagam Shah",
+      "email": "aagama@gmail.com",
+      "phone": "1234567890",
+      "department": "Frontend",
+      "designation": "Intern",
+      "doj": "2026-06-01",
+      "salary": 123,
       "password": "Example@123",
       "confirmPassword": "Example@123"
     }

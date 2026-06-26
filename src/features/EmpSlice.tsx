@@ -29,6 +29,7 @@ export const fetchUser = createAsyncThunk(
   "users/fetchUsers",
   async (_, thunkAPI) => {
     try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       const response = await fetch("http://localhost:10000/employee");
       if (!response.ok) {
         throw new Error("Server error, Failed to load data.");

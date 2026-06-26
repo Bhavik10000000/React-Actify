@@ -19,7 +19,8 @@ export const EmpSchema = z
     doj: z.coerce
       .date()
       .max(new Date(), { message: "Joining date must be before tomorrow." })
-      .transform((dateObj) => dateObj.toISOString().split("T")[0]),
+      // .transform((dateObj) => dateObj.toISOString().split("T")[0]),
+      .transform((date) => date.toISOString().slice(0, 10)),
     salary: z.number().min(0),
     password: z
       .string()

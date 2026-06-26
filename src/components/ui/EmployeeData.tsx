@@ -24,12 +24,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-// import {
-//   DropdownMenu,
-//   DropdownMenuCheckboxItem,
-//   DropdownMenuContent,
-//   DropdownMenuTrigger,
-// } from "@/components/ui/dropdown-menu";
 import type { VisibilityState } from "@tanstack/react-table";
 import {
   Table,
@@ -65,7 +59,48 @@ import {
 } from "@/features/EmpSlice";
 import { useAppDispatch } from "@/store";
 import type { RootState } from "@/store";
-import { getPaginationRowModel } from "@tanstack/react-table";
+import {
+  getPaginationRowModel,
+  getSortedRowModel,
+} from "@tanstack/react-table";
+import type { SortingState } from "@tanstack/react-table";
+import type { ColumnFiltersState } from "@tanstack/react-table";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { LoaderIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export function SkeletonCard() {
+  return (
+    <Card className="w-full max-w-xs">
+      <CardHeader>
+        <Skeleton className="h-90 w-2/3" />
+        <Skeleton className="h-20 w-1/2" />
+      </CardHeader>
+      <CardContent>
+        <Skeleton className="aspect-video w-full" />
+      </CardContent>
+    </Card>
+  );
+}
+
+function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+  return (
+    <LoaderIcon
+      role="status"
+      aria-label="Loading"
+      className={cn("size-4 animate-spin", className)}
+      {...props}
+    />
+  );
+}
 
 // Types
 type EmpValidation = z.infer<typeof EmpSchema>;
@@ -108,22 +143,26 @@ const EmployeeData = () => {
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
-  const [columnFilters, setColumnFilters] = useState([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [sorting, setSorting] = useState<SortingState>([]);
   // Tanstack Table
   const table = useReactTable({
     data,
     columns,
     state: {
+      sorting,
       globalFilter,
       columnFilters,
       columnVisibility,
     },
-    onGlobalFilterChange: setGlobalFilter,
-    // onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onGlobalFilterChange: setGlobalFilter,
+    onColumnFiltersChange: setColumnFilters,
+    onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
     initialState: {
       pagination: {
@@ -131,7 +170,6 @@ const EmployeeData = () => {
       },
     },
   });
-
   const dispatch = useAppDispatch();
   const [designation, setDesignation] = useState("");
   const [department, setDepartment] = useState("");
@@ -140,7 +178,6 @@ const EmployeeData = () => {
     ? Math.max(...data.map((emp) => parseInt(emp.id.replace("EMP-", ""))))
     : 0;
   const empId = `EMP-${maxId + 1}`;
-  // console.log(empId);
   // Form
   const {
     register,
@@ -157,10 +194,9 @@ const EmployeeData = () => {
       setAdd(false);
     } else if (edit) {
       dispatch(updateUser(data as any));
-      reset();
+      // reset();
     }
   };
-  //
   useEffect(() => {
     table.setPageSize(roww);
   }, [roww, table]);
@@ -172,7 +208,11 @@ const EmployeeData = () => {
     });
   }, [dispatch]);
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="items-center gap-4">
+        <Spinner />
+      </div>
+    );
   }
   if (error) {
     return (
@@ -271,8 +311,29 @@ const EmployeeData = () => {
             >
               Clear Filter
             </Button>{" "}
-            {/* <div className="ml-auto">
+            <div className="ml-auto">
               <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Button variant="outline">Columns</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-40">
+                  <DropdownMenuGroup>
+                    {table.getAllColumns().map((column) => (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(value)
+                        }
+                      >
+                        {column.columnDef.header as string}
+                      </DropdownMenuCheckboxItem>
+                    ))}
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Button variant="outline" className="ml-auto">
                     Columns
@@ -297,23 +358,43 @@ const EmployeeData = () => {
                       );
                     })}
                 </DropdownMenuContent>
-              </DropdownMenu>
-            </div> */}
+              </DropdownMenu> */}
+            </div>
           </div>
           <Separator />
           <Table>
-            <TableHeader>
+            <TableHeader className="sticky">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
+                      <TableHead
+                        className="cursor-pointer select-none"
+                        key={header.id}
+                        onClick={header.column.getToggleSortingHandler()}
+                      >
+                        <div className="flex">
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext(),
+                              )}
+
+                          {{
+                            asc: "↑",
+                            desc: "↓",
+                          }[header.column.getIsSorted() as string] ?? ""}
+                          {/* {header.column.getIsSorted() == "asc" ? (
+                            <p> ↑</p>
+                          ) : null}
+                          {header.column.getIsSorted() == "desc" ? (
+                            <p> ↓</p>
+                          ) : null}
+                          {header.column.getIsSorted() == false ? (
+                            <p></p>
+                          ) : null} */}
+                        </div>
                       </TableHead>
                     );
                   })}
