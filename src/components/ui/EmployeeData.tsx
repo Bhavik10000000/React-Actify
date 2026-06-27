@@ -187,15 +187,16 @@ const EmployeeData = () => {
     formState: { errors },
   } = useForm<EmpValidation>({ resolver: zodResolver(EmpSchema) as any });
 
-  const onSubmit = (data: EmpValidation) => {
+  const onSubmit = async (data: EmpValidation) => {
     if (add) {
       const user = { ...data, id: empId };
-      dispatch(createUser(user as any));
+      await dispatch(createUser(user as any)).unwrap();
       setAdd(false);
     } else if (edit) {
-      dispatch(updateUser(data as any));
-      // reset();
+      await dispatch(updateUser(data as any)).unwrap();
+      setEdit(false);
     }
+    reset();
   };
   useEffect(() => {
     table.setPageSize(roww);

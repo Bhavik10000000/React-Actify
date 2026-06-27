@@ -11,6 +11,8 @@ import { Toaster } from "./components/ui/sonner";
 import Task4 from "@/components/ui/Task4";
 import EmployeeData from "./components/ui/EmployeeData";
 import Task6 from "./components/ui/Task6.js";
+import Task7 from "./components/ui/Task7.js";
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -126,7 +128,7 @@ const App = () => {
               value="task7"
               className="w-full flex justify-center m-0 outline-none"
             >
-              <EmptyCom />
+              <Task7 />
             </TabsContent>
             <TabsContent
               value="task8"
@@ -153,7 +155,6 @@ const App = () => {
         </Routes>
       </div>
       <Toaster position="top-right" richColors />
-      {/* </Provider> */}
     </BrowserRouter>
   );
 };

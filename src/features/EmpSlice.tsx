@@ -24,13 +24,15 @@ const initialState: EmpState = {
   loading: false,
   error: null,
 };
+const API_URL =
+  "https://peaceful-creation-production-a617.up.railway.app/employee";
 
 export const fetchUser = createAsyncThunk(
   "users/fetchUsers",
   async (_, thunkAPI) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      const response = await fetch("http://localhost:10000/employee");
+      const response = await fetch(API_URL);
       if (!response.ok) {
         throw new Error("Server error, Failed to load data.");
       }
@@ -44,7 +46,7 @@ export const createUser = createAsyncThunk(
   "user/createUser",
   async (users, thunkAPI) => {
     try {
-      const response = await fetch("http://localhost:10000/employee", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(users),
@@ -62,7 +64,7 @@ export const deleteUser = createAsyncThunk(
   "user/deleteUser",
   async (id, thunkAPI) => {
     try {
-      const response = await fetch(`http://localhost:10000/employee/${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {
@@ -79,15 +81,12 @@ export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (user: EmpType, thunkAPI) => {
     try {
-      const response = await fetch(
-        `http://localhost:10000/employee/${user.id}`,
-        {
-          method: "PUT",
-          // PUT OR PATCH
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(user),
-        },
-      );
+      const response = await fetch(`${API_URL}/${user.id}`, {
+        method: "PUT",
+        // PUT OR PATCH
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
       if (!response.ok) {
         throw new Error("Failed to update user.");
       }
