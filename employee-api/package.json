@@ -1,0 +1,10 @@
+{
+  "name": "employee-api",
+  "private": true,
+  "scripts": {
+    "start": "json-server --host 0.0.0.0 --port $PORT db.json"
+  },
+  "dependencies": {
+    "json-server": "^0.17.4"
+  }
+}
